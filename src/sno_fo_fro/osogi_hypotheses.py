@@ -95,6 +95,6 @@ class ImageBlurrinessProcessor(ImageProcessor):
             image: The input image as a NumPy array (OpenCV format).
 
         Returns:
-            A float value representing the image saturation. Higher values indicate higher blurriness.
+            A float value representing the image saturation. Higher values indicate less blurriness.
         """
         return cv2.Laplacian(image, cv2.CV_64F).var()
