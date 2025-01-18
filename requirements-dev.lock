@@ -28,6 +28,7 @@ numpy==2.2.1
     # via contourpy
     # via matplotlib
     # via opencv-python
+    # via scipy
 opencv-python==4.10.0.84
     # via sno-fo-fro
 packaging==24.2
@@ -43,5 +44,6 @@ pyparsing==3.2.1
     # via matplotlib
 python-dateutil==2.9.0.post0
     # via matplotlib
+scipy==1.15.1
 six==1.17.0
     # via python-dateutil
