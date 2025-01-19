@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+import os
 import cv2
 import numpy as np
 
@@ -27,3 +28,15 @@ class ImageProcessor(ABC):
         if img is None:
             print(f"Error: Could not read image at {path}")
         return self.process_image(img)
+
+    def process_images_in_dir(self, dir_path: str) -> list[np.float32]:
+        results = []
+        for filename in os.listdir(dir_path):
+            if filename.lower().endswith(
+                (".png", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff")
+            ):
+                image_path = os.path.join(dir_path, filename)
+                result = self.process_image_by_path(image_path)
+                if result is not None:
+                    results.append(result)
+        return results
