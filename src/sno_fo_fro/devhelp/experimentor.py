@@ -37,15 +37,7 @@ class FolderProcessor:
         os.makedirs(output_dir, exist_ok=True)
 
         for folder_path in folder_paths:
-            results = []
-            for filename in os.listdir(folder_path):
-                if filename.lower().endswith(
-                    (".png", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff")
-                ):
-                    image_path = os.path.join(folder_path, filename)
-                    result = self.processor.process_image_by_path(image_path)
-                    if result is not None:
-                        results.append(result)
+            results = self.processor.process_images_in_dir(folder_path)
 
             output_filename = f"{os.path.basename(folder_path)}.txt"
             output_path = os.path.join(output_dir, output_filename)
@@ -150,6 +142,7 @@ class HistogramBuilder:
         print(f"  Max: {max_val:.4f}")
         print(f"  Standard Deviation: {std_dev:.4f}")
         print("-" * 20)
+
 
 # using: cd <project_dir>
 # rye run python -m src.sno_fo_fro.devhelp.experimentor
