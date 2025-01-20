@@ -11,22 +11,32 @@ from sno_fo_fro.hypotheses import (
     ImageLuminanceProcessor,
     ImageContrastProcessor,
     ImageSaturationProcessor,
+    ImageWhitenessProcessor,
+    ImageWhiteNoiseProcessor,
 )
 
 
 img_proc_and_idea = [
+    # (
+    #     ImageBlurrinessProcessor(),
+    #     (ExperimenterWeather.FOG, ExperimenterCompareMode.LESS),
+    # ),
+    # (
+    #     ImageLuminanceProcessor(),
+    #     (ExperimenterWeather.FROST, ExperimenterCompareMode.GREATER),
+    # ),
+    # (ImageContrastProcessor(), (ExperimenterWeather.FOG, ExperimenterCompareMode.LESS)),
+    # (
+    #     ImageSaturationProcessor(),
+    #     (ExperimenterWeather.FOG, ExperimenterCompareMode.LESS),
+    # ),
     (
-        ImageBlurrinessProcessor(),
-        (ExperimenterWeather.FOG, ExperimenterCompareMode.LESS),
+        ImageWhiteNoiseProcessor(),
+        (ExperimenterWeather.SNOW, ExperimenterCompareMode.GREATER),
     ),
     (
-        ImageLuminanceProcessor(),
-        (ExperimenterWeather.FROST, ExperimenterCompareMode.GREATER),
-    ),
-    (ImageContrastProcessor(), (ExperimenterWeather.FOG, ExperimenterCompareMode.LESS)),
-    (
-        ImageSaturationProcessor(),
-        (ExperimenterWeather.FOG, ExperimenterCompareMode.LESS),
+        ImageWhitenessProcessor(),
+        (ExperimenterWeather.SNOW, ExperimenterCompareMode.GREATER),
     ),
 ]
 
