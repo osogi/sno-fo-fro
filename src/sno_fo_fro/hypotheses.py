@@ -98,3 +98,97 @@ class ImageBlurrinessProcessor(ImageProcessor):
             A float value representing the image saturation. Higher values indicate less blurriness.
         """
         return cv2.Laplacian(image, cv2.CV_64F).var()
+
+
+class ImageWhitenessProcessor(ImageProcessor):
+    """
+    Image processor that calculates the relative number of pixels that look white.
+    White is defined as pixels with high value (brightness) and low saturation.
+    """
+
+    def __init__(self, value_threshold: float = 200, saturation_threshold: float = 50):
+        """
+        Initializes the ImageWhitenessProcessor.
+
+        Args:
+            value_threshold: The minimum value (brightness) for a pixel to be considered white.
+            saturation_threshold: The maximum saturation for a pixel to be considered white.
+        """
+        self.value_threshold = value_threshold
+        self.saturation_threshold = saturation_threshold
+
+    def process_image(self, image: np.ndarray) -> np.float32:
+        """
+        Processes the image to calculate the relative number of white pixels.
+
+        Args:
+            image: The input image as a NumPy array (OpenCV format).
+
+        Returns:
+            A float value representing the fraction of white pixels in the image.
+        """
+        # Convert the image to HSV color space
+        hsv_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+
+        # Split the HSV image into hue, saturation, and value channels
+        h, s, v = cv2.split(hsv_image)
+
+        # Define a mask for white pixels: high value and low saturation
+        white_mask = (v >= self.value_threshold) & (s <= self.saturation_threshold)
+
+        # Calculate the fraction of white pixels
+        white_pixel_count = np.sum(white_mask)
+        total_pixels = image.shape[0] * image.shape[1]
+        white_fraction = white_pixel_count / total_pixels
+
+        return np.float32(white_fraction)
+
+
+class ImageWhiteNoiseProcessor(ImageBlurrinessProcessor):
+
+    def process_image(self, image: np.ndarray) -> np.float32:
+
+        # 2. Convert the image to HSV color space
+        hsv_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+
+        # 3. Extract Saturation and Value channels
+        saturation_channel = hsv_image[:, :, 1].astype(
+            np.float32
+        )  # Channel 1 is Saturation in HSV (OpenCV)
+        value_channel = hsv_image[:, :, 2].astype(
+            np.float32
+        )  # Channel 2 is Value in HSV (OpenCV)
+
+        # 4. Calculate Gradients for Saturation Channel
+        # Using Sobel operator for gradient calculation - you can use other methods like Scharr, Prewitt, etc.
+        grad_saturation_x = cv2.Sobel(
+            saturation_channel, cv2.CV_64F, 1, 0, ksize=3
+        )  # Gradient in x-direction
+        grad_saturation_y = cv2.Sobel(
+            saturation_channel, cv2.CV_64F, 0, 1, ksize=3
+        )  # Gradient in y-direction
+
+        # Calculate gradient magnitude for Saturation
+        saturation_gradient_magnitude = np.sqrt(
+            grad_saturation_x**2 + grad_saturation_y**2
+        )
+
+        # 5. Calculate Gradients for Value Channel
+        grad_value_x = cv2.Sobel(
+            value_channel, cv2.CV_64F, 1, 0, ksize=3
+        )  # Gradient in x-direction
+        grad_value_y = cv2.Sobel(
+            value_channel, cv2.CV_64F, 0, 1, ksize=3
+        )  # Gradient in y-direction
+
+        # Calculate gradient magnitude for Value
+        value_gradient_magnitude = np.sqrt(grad_value_x**2 + grad_value_y**2)
+
+        whiteness_of_pixel = value_channel / np.maximum(saturation_channel, 1)
+
+        grad_mult = (
+            saturation_gradient_magnitude
+            * value_gradient_magnitude
+            * whiteness_of_pixel
+        )
+        return grad_mult.std()
