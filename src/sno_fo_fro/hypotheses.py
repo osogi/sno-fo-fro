@@ -8,6 +8,9 @@ class ImageLuminanceProcessor(ImageProcessor):
     Calculates the average perceived luminance of an image.
     """
 
+    def __init__(self, use_brightness: bool = False):
+        self.use_brightness = use_brightness
+
     def process_image(self, image: np.ndarray) -> np.float32:
         """
         Calculates the average luminance of the input image.
@@ -18,24 +21,28 @@ class ImageLuminanceProcessor(ImageProcessor):
         Returns:
             The average luminance of the image.  Returns -1 on error.
         """
+        if use_brightness:
+            img_hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+            brightness = img_hsv[:, :, 2].mean()
+            return brightness
+        else:
+            if len(image.shape) != 3 or image.shape[2] != 3:
+                raise TypeError("Error: Image must have 3 color channels (BGR).")
 
-        if len(image.shape) != 3 or image.shape[2] != 3:
-            raise TypeError("Error: Image must have 3 color channels (BGR).")
+            # Split the image into its B, G, and R channels (float for accuracy)
+            blue_channel = image[:, :, 0].astype(np.float64)
+            green_channel = image[:, :, 1].astype(np.float64)
+            red_channel = image[:, :, 2].astype(np.float64)
 
-        # Split the image into its B, G, and R channels (float for accuracy)
-        blue_channel = image[:, :, 0].astype(np.float64)
-        green_channel = image[:, :, 1].astype(np.float64)
-        red_channel = image[:, :, 2].astype(np.float64)
+            # Calculate the luminance using the weighted sum formula
+            luminance = (
+                0.2126 * red_channel + 0.7152 * green_channel + 0.0722 * blue_channel
+            )
 
-        # Calculate the luminance using the weighted sum formula
-        luminance = (
-            0.2126 * red_channel + 0.7152 * green_channel + 0.0722 * blue_channel
-        )
+            # Calculate the average luminance
+            average_luminance = np.mean(luminance)
 
-        # Calculate the average luminance
-        average_luminance = np.mean(luminance)
-
-        return average_luminance
+            return average_luminance
 
 
 class ImageContrastProcessor(ImageProcessor):
@@ -266,3 +273,43 @@ class ImageColdnessProcessor(ImageProcessor):
         coldness_score = (b_avg - r_avg) / max(b_avg + r_avg + g_avg, 0)
 
         return np.float32(coldness_score)
+
+
+class ImageSegmentsProcessor(ImageProcessor):
+    def __init__(
+        self,
+        segment_size: int = 20,
+        low_threshold: int = 500,
+        high_threshold: int = 1000,
+    ):
+        self.segment_size = segment_size
+        self.low_threshold = low_threshold
+        self.high_threshold = high_threshold
+
+    def process_image(self, image: np.ndarray) -> np.float32:
+
+        high_blur_c = 0
+        low_blur_c = 0
+        mid_blur_c = 0
+
+        h, w, _ = image.shape
+
+        for x in range(0, h - self.segment_size, self.segment_size):
+            for y in range(0, w - self.segment_size, self.segment_size):
+                blur = cv2.Laplacian(
+                    image[x : x + self.segment_size, y : y + self.segment_size],
+                    cv2.CV_64F,
+                ).var()
+                # print(blur)
+
+                if blur > self.high_threshold:
+                    high_blur_c += 1
+                elif blur < self.low_threshold:
+                    low_blur_c += 1
+                else:
+                    mid_blur_c += 1
+
+        # print(f"#####\nh: {high_blur_c}\nl: {low_blur_c}\nm: {mid_blur_c}")
+        return np.float32(
+            2 * min(high_blur_c, low_blur_c) / (mid_blur_c + high_blur_c + low_blur_c)
+        )
