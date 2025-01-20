@@ -6,7 +6,7 @@ from sno_fo_fro.experiment.experimenter import (
     ExperimenterWeather,
     SampleAnalyzer,
 )
-from sno_fo_fro.osogi_hypotheses import (
+from sno_fo_fro.hypotheses import (
     ImageBlurrinessProcessor,
     ImageLuminanceProcessor,
     ImageContrastProcessor,

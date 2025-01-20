@@ -3,7 +3,7 @@ from src.sno_fo_fro.core import ImageProcessor
 from typing import List
 import matplotlib.pyplot as plt
 import numpy as np
-from sno_fo_fro.osogi_hypotheses import (
+from sno_fo_fro.hypotheses import (
     ImageBlurrinessProcessor,
     ImageLuminanceProcessor,
     ImageContrastProcessor,
