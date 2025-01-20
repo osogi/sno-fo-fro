@@ -13,6 +13,8 @@ from sno_fo_fro.hypotheses import (
     ImageSaturationProcessor,
     ImageWhitenessProcessor,
     ImageWhiteNoiseProcessor,
+    ImageColdnessProcessor,
+    ImageEdgeDensityProcessor,
 )
 
 
@@ -30,13 +32,21 @@ img_proc_and_idea = [
     #     ImageSaturationProcessor(),
     #     (ExperimenterWeather.FOG, ExperimenterCompareMode.LESS),
     # ),
+    # (
+    #     ImageWhiteNoiseProcessor(),
+    #     (ExperimenterWeather.SNOW, ExperimenterCompareMode.GREATER),
+    # ),
+    # (
+    #     ImageWhitenessProcessor(),
+    #     (ExperimenterWeather.SNOW, ExperimenterCompareMode.GREATER),
+    # ),
     (
-        ImageWhiteNoiseProcessor(),
-        (ExperimenterWeather.SNOW, ExperimenterCompareMode.GREATER),
+        ImageColdnessProcessor(),
+        (ExperimenterWeather.FROST, ExperimenterCompareMode.LESS),
     ),
     (
-        ImageWhitenessProcessor(),
-        (ExperimenterWeather.SNOW, ExperimenterCompareMode.GREATER),
+        ImageEdgeDensityProcessor(),
+        (ExperimenterWeather.FROST, ExperimenterCompareMode.GREATER),
     ),
 ]
 

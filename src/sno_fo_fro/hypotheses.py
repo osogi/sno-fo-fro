@@ -192,3 +192,77 @@ class ImageWhiteNoiseProcessor(ImageBlurrinessProcessor):
             * whiteness_of_pixel
         )
         return grad_mult.std()
+
+
+class ImageEdgeDensityProcessor(ImageProcessor):
+    def __init__(self, low_threshold: int = 100, high_threshold: int = 200):
+        """
+        Initializes the CannyEdgeDensityProcessor with specified thresholds.
+
+        Args:
+            low_threshold: Lower threshold for the hysteresis procedure in Canny.
+            high_threshold: Upper threshold for the hysteresis procedure in Canny.
+        """
+        self.low_threshold = low_threshold
+        self.high_threshold = high_threshold
+
+    def process_image(self, image: np.ndarray) -> np.float32:
+        """
+        Processes the input image using the Canny edge detector and calculates
+        the edge density.
+
+        Args:
+            image: The input image as a NumPy array (OpenCV format).
+
+        Returns:
+            A float value representing the density of edges in the image.
+        """
+
+        # Apply Canny edge detection
+        edges = cv2.Canny(image, self.low_threshold, self.high_threshold)
+
+        # Count the number of edge pixels
+        edge_count = np.sum(edges > 0)
+
+        # Calculate total number of pixels
+        total_pixels = image.size
+
+        # Calculate edge density
+        edge_density = edge_count / total_pixels
+
+        return np.float32(edge_density)
+
+
+class ImageColdnessProcessor(ImageProcessor):
+    """
+    Calculates a "coldness" score for an image based on its color channels.
+    A higher score indicates a colder image (more blue, less red).
+    """
+
+    def process_image(self, image: np.ndarray) -> np.float32:
+        """
+        Processes the input image and returns a "coldness" score.
+
+        Args:
+            image: The input image as a NumPy array (OpenCV format).
+
+        Returns:
+            A float value representing the "coldness" of the image.
+        """
+        # Ensure the image has 3 channels (BGR)
+        if len(image.shape) != 3 or image.shape[2] != 3:
+            raise ValueError("Input image must be a BGR color image.")
+
+        # Split the image into its color channels (Blue, Green, Red)
+        b, g, r = cv2.split(image)
+
+        # Calculate the average intensity of each channel
+        b_avg = b.mean()
+        g_avg = g.mean()
+        r_avg = r.mean()
+
+        # Define a "coldness" score based on the ratio of blue to red
+        # You can adjust the formula to better suit your definition of "coldness"
+        coldness_score = (b_avg - r_avg) / max(b_avg + r_avg + g_avg, 0)
+
+        return np.float32(coldness_score)

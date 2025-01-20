@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sno_fo_fro.hypotheses import (
     ImageBlurrinessProcessor,
+    ImageColdnessProcessor,
+    ImageEdgeDensityProcessor,
     ImageLuminanceProcessor,
     ImageContrastProcessor,
     ImageSaturationProcessor,
@@ -149,7 +151,7 @@ class HistogramBuilder:
 # using: cd <project_dir>
 # rye run python -m src.sno_fo_fro.devhelp.experimentor
 if __name__ == "__main__":
-    img_proc = ImageWhiteNoiseProcessor()
+    img_proc = ImageColdnessProcessor()
     outputfolder = f"result/{img_proc.__class__.__name__}"
 
     parent_dir = "weather-data"
