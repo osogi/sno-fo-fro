@@ -21,7 +21,7 @@ class ImageLuminanceProcessor(ImageProcessor):
         Returns:
             The average luminance of the image.  Returns -1 on error.
         """
-        if use_brightness:
+        if self.use_brightness:
             img_hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
             brightness = img_hsv[:, :, 2].mean()
             return brightness
@@ -151,7 +151,7 @@ class ImageWhitenessProcessor(ImageProcessor):
         return np.float32(white_fraction)
 
 
-class ImageWhiteNoiseProcessor(ImageBlurrinessProcessor):
+class ImageWhiteGradientProcessor(ImageBlurrinessProcessor):
 
     def process_image(self, image: np.ndarray) -> np.float32:
 
@@ -275,7 +275,7 @@ class ImageColdnessProcessor(ImageProcessor):
         return np.float32(coldness_score)
 
 
-class ImageSegmentsProcessor(ImageProcessor):
+class ImageSegmentsSharpnessProcessor(ImageProcessor):
     def __init__(
         self,
         segment_size: int = 20,

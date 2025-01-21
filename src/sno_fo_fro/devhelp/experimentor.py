@@ -10,9 +10,9 @@ from sno_fo_fro.hypotheses import (
     ImageLuminanceProcessor,
     ImageContrastProcessor,
     ImageSaturationProcessor,
-    ImageSegmentsProcessor,
+    ImageSegmentsSharpnessProcessor,
     ImageWhitenessProcessor,
-    ImageWhiteNoiseProcessor,
+    ImageWhiteGradientProcessor,
 )
 import sys
 
@@ -152,7 +152,7 @@ class HistogramBuilder:
 # using: cd <project_dir>
 # rye run python -m src.sno_fo_fro.devhelp.experimentor
 if __name__ == "__main__":
-    img_proc = ImageSegmentsProcessor()
+    img_proc = ImageSegmentsSharpnessProcessor()
     outputfolder = f"result/{img_proc.__class__.__name__}"
 
     parent_dir = "weather-data"
