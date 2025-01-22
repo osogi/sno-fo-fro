@@ -6,6 +6,7 @@ from sno_fo_fro.experiment.experimenter import (
 )
 from sno_fo_fro.hypotheses import (
     ImageBlurrinessProcessor,
+    ImageBrightSpotsProcessor,
     ImageLuminanceProcessor,
     ImageContrastProcessor,
     ImageSaturationProcessor,
@@ -57,6 +58,10 @@ img_proc_and_idea: list[
     (
         ImageSegmentsSharpnessProcessor(),
         (ExperimenterWeather.SNOW, ExperimenterCompareMode.GREATER),
+    ),
+    (
+        ImageBrightSpotsProcessor(),
+        (ExperimenterWeather.FROST, ExperimenterCompareMode.GREATER),
     ),
 ]
 

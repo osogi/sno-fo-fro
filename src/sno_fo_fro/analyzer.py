@@ -1,7 +1,7 @@
-
 from numpy import ndarray
 from sno_fo_fro.hypotheses import (
     ImageBlurrinessProcessor,
+    ImageBrightSpotsProcessor,
     ImageColdnessProcessor,
     ImageContrastProcessor,
     ImageEdgeDensityProcessor,
@@ -29,6 +29,7 @@ METRIC_EDGE_DENSITY = Metric("EDGE_DENSITY", ImageEdgeDensityProcessor())
 METRIC_SEGMENTS_SHARPNESS = Metric(
     "SEGMENTS_SHARPNESS", ImageSegmentsSharpnessProcessor()
 )
+METRIC_BRIGHT_SPOTS = Metric("BRIGHT_SPOTS", ImageBrightSpotsProcessor())
 
 
 class CombinedImageProcessor[T](ImageProcessor):
@@ -53,5 +54,6 @@ ImageAnalyzer = CombinedImageProcessor[float](
         METRIC_COLDNESS,
         METRIC_EDGE_DENSITY,
         METRIC_SEGMENTS_SHARPNESS,
+        METRIC_BRIGHT_SPOTS,
     ]
 )

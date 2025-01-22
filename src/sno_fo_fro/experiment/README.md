@@ -275,3 +275,28 @@ KstestResult(statistic=np.float64(0.14707979626485568), pvalue=np.float64(7.6816
 
 ##### Conclusion
 All tests passed. The hypothesis of ImageProcessor ImageSegmentsSharpnessProcessor is accepted.
+
+#### Analyze result for proc 'ImageBrightSpotsProcessor'
+
+##### Analyze 'frost' greater 'snow'
+Both samples have not a normal distribution.
+
+###### Mann-Whitney U test: passed
+MannwhitneyuResult(statistic=np.float64(176766.0), pvalue=np.float64(6.31280016592005e-09))
+/home/user1/github/university/sno-fo-fro/.venv/lib/python3.12/site-packages/scipy/stats/_axis_nan_policy.py:586: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
+  res = hypotest_fun_out(*samples, **kwds)
+
+###### Two-sample Kolmogorov-Smirnov: passed
+KstestResult(statistic=np.float64(0.17760611205432938), pvalue=np.float64(3.6090625919488726e-08), statistic_location=np.float64(0.1493270475134036), statistic_sign=np.int8(-1))
+
+##### Analyze 'frost' greater 'fogsmog'
+Both samples have not a normal distribution.
+
+###### Mann-Whitney U test: passed
+MannwhitneyuResult(statistic=np.float64(391138.0), pvalue=np.float64(6.355651489142776e-177))
+
+###### Two-sample Kolmogorov-Smirnov: passed
+KstestResult(statistic=np.float64(0.831640866873065), pvalue=np.float64(4.1444722522067324e-184), statistic_location=np.float64(0.05342881944444444), statistic_sign=np.int8(-1))
+
+##### Conclusion
+All tests passed. The hypothesis of ImageProcessor ImageBrightSpotsProcessor is accepted.
