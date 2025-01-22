@@ -32,11 +32,11 @@ METRIC_SEGMENTS_SHARPNESS = Metric(
 )
 
 
-class CombinedImageProcessor(ImageProcessor):
+class CombinedImageProcessor[T](ImageProcessor):
     def __init__(self, metrics: list[Metric]):
         self.metrics = metrics
 
-    def process_image(self, image: ndarray) -> dict[str, Any]:
+    def process_image(self, image: ndarray) -> dict[str, T]:
         result = {}
         for metric in self.metrics:
             result[metric.name] = metric.img_proc.process_image(image)
@@ -44,7 +44,7 @@ class CombinedImageProcessor(ImageProcessor):
         return result
 
 
-ImageAnalyzer = CombinedImageProcessor(
+ImageAnalyzer = CombinedImageProcessor[float](
     [
         METRIC_WHITENESS,
         METRIC_BLURRINESS,
