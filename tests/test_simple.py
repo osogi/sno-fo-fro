@@ -1,2 +1,2 @@
-def simple_test():
+def test_simple():
     print("Welcome to pytest")
