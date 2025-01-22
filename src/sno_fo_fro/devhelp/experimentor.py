@@ -42,7 +42,7 @@ class FolderProcessor:
         os.makedirs(output_dir, exist_ok=True)
 
         for folder_path in folder_paths:
-            results = self.processor.process_images_in_dir(folder_path)
+            results = self.processor.process_images_in_dir(folder_path).values()
 
             output_filename = f"{os.path.basename(folder_path)}.txt"
             output_path = os.path.join(output_dir, output_filename)

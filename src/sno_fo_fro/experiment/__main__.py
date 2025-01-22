@@ -1,3 +1,4 @@
+from typing import Tuple
 from sno_fo_fro.experiment.experimenter import (
     Experimenter,
     ExperimenterCompareMode,
@@ -14,9 +15,12 @@ from sno_fo_fro.hypotheses import (
     ImageColdnessProcessor,
     ImageEdgeDensityProcessor,
 )
+from sno_fo_fro.image_processor import ImageProcessor
 
 
-img_proc_and_idea = [
+img_proc_and_idea: list[
+    Tuple[ImageProcessor, Tuple[ExperimenterWeather, ExperimenterCompareMode]]
+] = [
     (
         ImageBlurrinessProcessor(),
         (ExperimenterWeather.FOG, ExperimenterCompareMode.LESS),

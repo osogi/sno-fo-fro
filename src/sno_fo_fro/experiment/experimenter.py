@@ -43,7 +43,7 @@ class ExperimenterWeather(StrEnum):
 class Experimenter:
     def __init__(
         self,
-        img_proc: ImageProcessor,
+        img_proc: ImageProcessor[np.floating],
         parent_dir: str = "weather-data",
     ):
         self.img_proc = img_proc
@@ -51,7 +51,7 @@ class Experimenter:
         self.weather_samples = {}
         for weather in ExperimenterWeather:
             dir_path = os.path.join(parent_dir, weather)
-            sample = img_proc.process_images_in_dir(dir_path)
+            sample = list(img_proc.process_images_in_dir(dir_path).values())
             self.weather_samples[weather] = np.array(sample)
 
     def check_test_res(
@@ -211,7 +211,9 @@ class SampleAnalyzer:
         Returns:
             The result of the scipy.stats.ks_2samp function.
         """
-        return stats.ks_2samp(self.sample1, self.sample2, alternative=self.mode.invert())
+        return stats.ks_2samp(
+            self.sample1, self.sample2, alternative=self.mode.invert()
+        )
 
     def t_test(self):
         """
