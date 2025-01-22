@@ -4,10 +4,12 @@
 **Sno-fo-fro** (**sno**w-**fo**g-**fro**st) — это приложение, которое поможет вам определить, какая погода на улице: снежная, туманная или морозная, просто по фотографии. Больше не нужно гадать, глядя в окно!
 
 ## Быстрый старт
+
 Начальная настройка
 ```python
 rye sync
 ```
+
 Запуск
 ```python
 rye run python -m src.sno_fo_fro.app
@@ -46,7 +48,13 @@ rye test
 rye run python -m src.sno_fo_fro.experiment
 ```
 
+### Обучение модели на датасете `weather-data`
 
+1. Скачать [датасет с изображениями](https://drive.usercontent.google.com/download?id=1DgfRxGJRhEGTGR7H1HbuifFz0TUlbBaG&export=download) и распаковать в корне проекта в папку `weather-data`
+2. Запустить `rye run python -m src.sno_fo_fro.scripts.generate_csv` для генерации датасета с метриками `metrics_table.csv`
+3. Запустить `ml.ipynb` и дождаться окончания обучения модели (около 10 минут)
+4. В директории `pretrained` появится готовая модель
+5. По желанию, передать в H2OMLClassifier путь до готовой модели
 
 ## Лицензия
 
