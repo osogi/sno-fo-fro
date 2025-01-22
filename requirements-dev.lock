@@ -31,11 +31,12 @@ kiwisolver==1.4.8
 matplotlib==3.10.0
 nodeenv==1.9.1
     # via pre-commit
-numpy==2.2.1
+numpy==2.2.2
     # via contourpy
     # via matplotlib
     # via opencv-python
     # via scipy
+    # via sno-fo-fro
 opencv-python==4.10.0.84
     # via sno-fo-fro
 packaging==24.2
