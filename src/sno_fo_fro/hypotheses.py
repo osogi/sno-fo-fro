@@ -152,9 +152,7 @@ class ImageWhitenessProcessor(ImageProcessor):
 
 
 class ImageWhiteGradientProcessor(ImageBlurrinessProcessor):
-
     def process_image(self, image: np.ndarray) -> np.float32:
-
         # 2. Convert the image to HSV color space
         hsv_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
@@ -287,7 +285,6 @@ class ImageSegmentsSharpnessProcessor(ImageProcessor):
         self.high_threshold = high_threshold
 
     def process_image(self, image: np.ndarray) -> np.float32:
-
         high_blur_c = 0
         low_blur_c = 0
         mid_blur_c = 0
