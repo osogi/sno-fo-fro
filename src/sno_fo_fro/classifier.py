@@ -7,6 +7,7 @@ import pandas as pd
 
 PATH_TO_MODEL = "pretrained/GBM_2_AutoML_1_20250122_184812"
 
+
 class WeatherClass(StrEnum):
     SNOW = "Snow"
     FOG = "Fog"
@@ -37,6 +38,7 @@ class MockImageClassifier(ImageClassifier):
     def classify(self, image_params: Dict[str, float]) -> str:
         return random.choice(list(WeatherClass))
 
+
 class H2OMLClassifier(ImageClassifier):
     def __init__(self, model_path: str = PATH_TO_MODEL):
         """
@@ -47,9 +49,26 @@ class H2OMLClassifier(ImageClassifier):
         self.model_path = model_path
         h2o.init()
 
+    def format_dataframe(self, df):
+        res = df.as_data_frame().to_dict()
+        pred: str = res["predict"][0]
+        fog = res["fogsmog"][0] * 100
+        frost = res["frost"][0] * 100
+        snow = res["snow"][0] * 100
+
+        header = f"--- {pred.upper()} ---"
+        ln = len(header)
+        formatted_string = (
+            f"{header}\n"
+            f"snow: {snow:>{ln-6}.1f}%\n"
+            f"frost: {frost:>{ln-7}.1f}%\n"
+            f"fog: {fog:>{ln-5}.1f}%"
+        )
+        return formatted_string
+
     def classify(self, image_params: Dict[str, float]) -> str:
         loaded_model = h2o.load_model(self.model_path)
         pandas_df = pd.DataFrame(image_params, index=[0])
         h2o_df = h2o.H2OFrame(pandas_df)
         new_preds = loaded_model.predict(h2o_df)
-        return new_preds
+        return self.format_dataframe(new_preds)
