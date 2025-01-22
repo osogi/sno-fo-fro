@@ -52,6 +52,4 @@ class H2OMLClassifier(ImageClassifier):
         pandas_df = pd.DataFrame(image_params, index=[0])
         h2o_df = h2o.H2OFrame(pandas_df)
         new_preds = loaded_model.predict(h2o_df)
-        return str(new_preds)
-
-
+        return new_preds

@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import (
     QMessageBox,
     QSizePolicy,
 )
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtGui import QPixmap, QFont
 from PyQt5.QtCore import Qt
 
 from sno_fo_fro.analyzer import ImageAnalyzer
@@ -82,6 +82,7 @@ class ImageViewerApp(QWidget):
 
             # Show caption with file path
             weather_res = get_image_class(file_path)
+            self.caption_label.setFont(QFont("Courier New", 14))
             self.caption_label.setText(f"{weather_res}")
             self.caption_label.show()
 
