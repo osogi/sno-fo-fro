@@ -310,3 +310,24 @@ class ImageSegmentsSharpnessProcessor(ImageProcessor):
         return np.float32(
             2 * min(high_blur_c, low_blur_c) / (mid_blur_c + high_blur_c + low_blur_c)
         )
+
+
+class ImageBrightSpotsProcessor(ImageProcessor):
+    def __init__(self, kernel_size: int = 15, threshold_value: int = 20):
+        self.kernel_size = kernel_size
+        self.threshold_value = threshold_value
+
+    def process_image(self, image: np.ndarray) -> float:
+        hsv_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+        V = hsv_image[:, :, 2]
+        local_avg = cv2.blur(V, (self.kernel_size, self.kernel_size))
+
+        bright_spots_mask = (
+            V.astype(np.float32) - local_avg.astype(np.float32)
+        ) > self.threshold_value
+        count_bright_pixels = np.sum(bright_spots_mask)
+
+        total_pixels = image.shape[0] * image.shape[1]
+        bright_spots_ratio = float(count_bright_pixels) / float(total_pixels)
+
+        return bright_spots_ratio
