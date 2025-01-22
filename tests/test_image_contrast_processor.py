@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 
 from sno_fo_fro.hypotheses import ImageContrastProcessor
-from test_utils import EPS
+from utils import EPS
 
 
 def test_black_image():
