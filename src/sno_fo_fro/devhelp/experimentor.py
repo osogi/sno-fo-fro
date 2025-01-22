@@ -4,15 +4,7 @@ from typing import List
 import matplotlib.pyplot as plt
 import numpy as np
 from sno_fo_fro.hypotheses import (
-    ImageBlurrinessProcessor,
-    ImageColdnessProcessor,
-    ImageEdgeDensityProcessor,
-    ImageLuminanceProcessor,
-    ImageContrastProcessor,
-    ImageSaturationProcessor,
     ImageSegmentsSharpnessProcessor,
-    ImageWhitenessProcessor,
-    ImageWhiteGradientProcessor,
 )
 import sys
 

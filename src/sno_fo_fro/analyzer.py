@@ -1,4 +1,3 @@
-from typing import Any
 
 from numpy import ndarray
 from sno_fo_fro.hypotheses import (

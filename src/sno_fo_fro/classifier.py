@@ -32,5 +32,4 @@ class MockImageClassifier(ImageClassifier):
     """
 
     def classify(self, image_params: Dict[str, float]) -> WeatherClass:
-
         return random.choice(list(WeatherClass))

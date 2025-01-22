@@ -97,10 +97,10 @@ class ImageViewerApp(QWidget):
             )
             self.image_label.setPixmap(scaled_pixmap)
 
-    def resizeEvent(self, event):
+    def resizeEvent(self, a0):
         """Handle window resize event to adjust the image size."""
         self.resize_image()
-        event.accept()
+        a0.accept()
 
 
 if __name__ == "__main__":
