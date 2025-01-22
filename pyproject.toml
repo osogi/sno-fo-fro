@@ -9,6 +9,8 @@ dependencies = [
     "opencv-python>=4.10.0.84",
     "pyqt5>=5.15.11",
     "pre-commit>=4.1.0",
+    "pandas>=2.2.3",
+    "h2o>=3.46.0.6",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"
@@ -23,6 +25,8 @@ dev-dependencies = [
     "matplotlib>=3.10.0",
     "scipy>=1.15.1",
     "pytest>=8.3.4",
+    "scikit-learn>=1.6.1",
+    "ipykernel>=6.29.5",
 ]
 
 [tool.hatch.metadata]

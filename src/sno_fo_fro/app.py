@@ -14,11 +14,7 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 
 from sno_fo_fro.analyzer import ImageAnalyzer
-from sno_fo_fro.classifier import MockImageClassifier, WeatherClass
-
-
-classifier = MockImageClassifier()
-
+from sno_fo_fro.classifier import H2OMLClassifier, WeatherClass
 
 def get_image_class(path: str) -> WeatherClass:
     metrics = ImageAnalyzer.process_image_by_path(path)
@@ -86,7 +82,7 @@ class ImageViewerApp(QWidget):
 
             # Show caption with file path
             weather_res = get_image_class(file_path)
-            self.caption_label.setText(f"Weather: {weather_res}")
+            self.caption_label.setText(f"{weather_res}")
             self.caption_label.show()
 
     def resize_image(self):
@@ -104,6 +100,7 @@ class ImageViewerApp(QWidget):
 
 
 if __name__ == "__main__":
+    classifier = H2OMLClassifier()
     app = QApplication(sys.argv)
     viewer = ImageViewerApp()
     viewer.show()
