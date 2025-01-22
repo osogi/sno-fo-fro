@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-from src.sno_fo_fro.core import ImageProcessor
+from sno_fo_fro.image_processor import ImageProcessor
 
 
 class ImageLuminanceProcessor(ImageProcessor):

@@ -3,7 +3,7 @@ import numpy as np
 from scipy import stats
 from enum import StrEnum
 
-from sno_fo_fro.core import ImageProcessor
+from sno_fo_fro.image_processor import ImageProcessor
 
 
 class ExperimenterCompareMode(StrEnum):

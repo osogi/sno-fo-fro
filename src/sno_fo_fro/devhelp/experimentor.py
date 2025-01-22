@@ -1,5 +1,5 @@
 import os
-from src.sno_fo_fro.core import ImageProcessor
+from sno_fo_fro.image_processor import ImageProcessor
 from typing import List
 import matplotlib.pyplot as plt
 import numpy as np
