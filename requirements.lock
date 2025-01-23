@@ -10,19 +10,30 @@
 #   universal: false
 
 -e file:.
+certifi==2024.12.14
+    # via requests
 cfgv==3.4.0
     # via pre-commit
+charset-normalizer==3.4.1
+    # via requests
 distlib==0.3.9
     # via virtualenv
 filelock==3.17.0
     # via virtualenv
+h2o==3.46.0.6
+    # via sno-fo-fro
 identify==2.6.6
     # via pre-commit
+idna==3.10
+    # via requests
 nodeenv==1.9.1
     # via pre-commit
-numpy==2.2.1
+numpy==2.2.2
     # via opencv-python
-opencv-python==4.10.0.84
+    # via pandas
+opencv-python==4.11.0.86
+    # via sno-fo-fro
+pandas==2.2.3
     # via sno-fo-fro
 platformdirs==4.3.6
     # via virtualenv
@@ -34,7 +45,21 @@ pyqt5-qt5==5.15.16
     # via pyqt5
 pyqt5-sip==12.16.1
     # via pyqt5
+python-dateutil==2.9.0.post0
+    # via pandas
+pytz==2024.2
+    # via pandas
 pyyaml==6.0.2
     # via pre-commit
+requests==2.32.3
+    # via h2o
+six==1.17.0
+    # via python-dateutil
+tabulate==0.9.0
+    # via h2o
+tzdata==2025.1
+    # via pandas
+urllib3==2.3.0
+    # via requests
 virtualenv==20.29.1
     # via pre-commit

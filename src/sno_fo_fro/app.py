@@ -10,14 +10,11 @@ from PyQt5.QtWidgets import (
     QMessageBox,
     QSizePolicy,
 )
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtGui import QPixmap, QFont, QIcon
 from PyQt5.QtCore import Qt
 
 from sno_fo_fro.analyzer import ImageAnalyzer
-from sno_fo_fro.classifier import MockImageClassifier, WeatherClass
-
-
-classifier = MockImageClassifier()
+from sno_fo_fro.classifier import H2OMLClassifier, WeatherClass
 
 
 def get_image_class(path: str) -> WeatherClass:
@@ -25,15 +22,15 @@ def get_image_class(path: str) -> WeatherClass:
     return classifier.classify(metrics)
 
 
-class ImageViewerApp(QWidget):
+class App(QWidget):
     def __init__(self):
         super().__init__()
-
         self.image_pixmap = None
         self.initUI()
 
     def initUI(self):
-        self.setWindowTitle("Image Viewer")
+        self.setWindowTitle("sno-fo-fro")
+        self.setWindowIcon(QIcon("icon.png"))
         self.setGeometry(100, 100, 800, 600)
 
         # Create UI elements
@@ -86,7 +83,8 @@ class ImageViewerApp(QWidget):
 
             # Show caption with file path
             weather_res = get_image_class(file_path)
-            self.caption_label.setText(f"Weather: {weather_res}")
+            self.caption_label.setFont(QFont("Courier New", 14))
+            self.caption_label.setText(f"{weather_res}")
             self.caption_label.show()
 
     def resize_image(self):
@@ -104,7 +102,8 @@ class ImageViewerApp(QWidget):
 
 
 if __name__ == "__main__":
+    classifier = H2OMLClassifier()
     app = QApplication(sys.argv)
-    viewer = ImageViewerApp()
+    viewer = App()
     viewer.show()
     sys.exit(app.exec())

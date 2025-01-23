@@ -227,6 +227,6 @@ pyrightconfig.json
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,python,c++
 
-# Ignore dir with weather images
 weather-data/
 result/
+metrics_table.csv
